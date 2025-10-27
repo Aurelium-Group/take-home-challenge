@@ -1,10 +1,15 @@
 type RiskPreference = "DEFENSIVE" | "BALANCED" | "GROWTH";
 type ProjectionCalculatorInput = {
-  date_of_birth: Date;
+  date_of_birth: string;
   current_assets: number;
   savings: number;
   expenses: number;
   risk_preference: RiskPreference;
+};
+
+type ProjectionResponseData = {
+  age: number[];
+  assets: number[];
 };
 
 const baseUrl = new URL(
@@ -17,5 +22,8 @@ export function calculateProjection(input: ProjectionCalculatorInput) {
   return fetch(baseUrl, {
     method: "POST",
     body: JSON.stringify(input),
+    headers: {
+      "content-type": "application/json",
+    },
   });
 }
